@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>vueX页面刷新、数据丢失问题 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="vueX页面刷新、数据丢失问题首先要搞清楚为什么state数据会丢失。 通常情况state里的初始数据是空，通过mutation或者action的方法获取实际数据后存放在state中。这些方法往往是在某个组件（组件A）的生命周期或者事件中调用。如果在刷新页面的时候这些方法没有被调用（例如此时页面中没有组件A，或组件A的对应事件没有被触发），那么就没有获取实际数据，state的数据就是初始的空。 就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vueX页面刷新、数据丢失问题">
+<meta property="og:url" content="http://example.com/2021/03/14/vueX%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="vueX页面刷新、数据丢失问题首先要搞清楚为什么state数据会丢失。 通常情况state里的初始数据是空，通过mutation或者action的方法获取实际数据后存放在state中。这些方法往往是在某个组件（组件A）的生命周期或者事件中调用。如果在刷新页面的时候这些方法没有被调用（例如此时页面中没有组件A，或组件A的对应事件没有被触发），那么就没有获取实际数据，state的数据就是初始的空。 就">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/vuex1.png">
+<meta property="og:image" content="http://example.com/images/vuex2.png">
+<meta property="og:image" content="http://example.com/images/vuex3.png">
+<meta property="og:image" content="http://example.com/images/vuex4.png">
+<meta property="article:published_time" content="2021-03-14T05:20:35.000Z">
+<meta property="article:modified_time" content="2021-03-14T05:49:26.118Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/vuex1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-vueX页面刷新、数据丢失问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/03/14/vueX%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2021-03-14T05:20:35.000Z" itemprop="datePublished">2021-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      vueX页面刷新、数据丢失问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="vueX页面刷新、数据丢失问题"><a href="#vueX页面刷新、数据丢失问题" class="headerlink" title="vueX页面刷新、数据丢失问题"></a>vueX页面刷新、数据丢失问题</h2><p>首先要搞清楚为什么state数据会丢失。</p>
+<p>通常情况state里的初始数据是空，通过mutation或者action的方法获取实际数据后存放在state中。这些方法往往是在某个组件（组件A）的生命周期或者事件中调用。如果在刷新页面的时候这些方法没有被调用（例如此时页面中没有组件A，或组件A的对应事件没有被触发），那么就没有获取实际数据，state的数据就是初始的空。</p>
+<p>就是要确保刷新页面以后调用对应的获取数据方法。<br>最万金油的解决是在App.vue的mounted生命周期中去调用这些方法。不管在哪个路由下刷新页面，总会执行。<br>（个人见解、但是在网上看到很多运用浏览器内存解决此文问题的文章、特此记录一下。）</p>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><h4 id="办法一"><a href="#办法一" class="headerlink" title="办法一"></a>办法一</h4><p>将vuex中的数据直接保存到浏览器缓存中（sessionStorage、localStorage、cookie）<br>（⚠️缺点是不安全，不适用大数据量的存储）</p>
+<h4 id="办法二"><a href="#办法二" class="headerlink" title="办法二"></a>办法二</h4><p>在页面刷新的时候再次请求远程数据，使之动态更新vuex数据<br>（适用于少量的数据，并且不会出现网络延迟；）</p>
+<h4 id="办法三"><a href="#办法三" class="headerlink" title="办法三"></a>办法三</h4><p>在父页面向后台请求远程数据，并且在页面刷新前将vuex的数据先保存至sessionStorage（以防请求数据量过大页面加载时拿不到返回的数据）<br>（是要讲的重点，办法二和办法一一起使用。）</p>
+<h4 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h4><h5 id="选择合适的浏览器存储"><a href="#选择合适的浏览器存储" class="headerlink" title="选择合适的浏览器存储"></a>选择合适的浏览器存储</h5><p>localStorage – 是永久存储在本地，除非你主动去删除;<br>sessionStorage – 是存储到当前页面关闭为止，和其他tab页没关联;<br>cookie – 则根据你设置的有效时间来存储，但缺点是不能储存大数据且不易读取，会和后台进行交互。</p>
+<p>本方法选择的是sessionStorage，选择的原因是由于vue是单页面应用，操作都是在一个页面跳转路由，另一个原因是sessionStorage可以保证打开页面时sessionStorage的数据为空，而如果是localStorage则会读取上一次打开页面的数据。</p>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><p>由于state里的数据是响应式，所以sessionStorage存储也要跟随变化，而且只能通过mutations来改变state中的值。</p>
+<p>首先在用户登录成功之后，然后把用户信息，菜单信息通过actions分发保存至vuex中。然后在菜单页面计算vuex中state的菜单数据，将数据解析组装成前端组件所需的格式，然后渲染组件，生成菜单树。如果页面没有刷新，则一切正常。</p>
+<h5 id="登录成功后将用户和菜单数据同步至vuex"><a href="#登录成功后将用户和菜单数据同步至vuex" class="headerlink" title="登录成功后将用户和菜单数据同步至vuex"></a>登录成功后将用户和菜单数据同步至vuex</h5><p><img src="/images/vuex1.png" alt="&quot;代码&quot;">  </p>
+<h5 id="在菜单页面监听vuex中菜单数据"><a href="#在菜单页面监听vuex中菜单数据" class="headerlink" title="在菜单页面监听vuex中菜单数据"></a>在菜单页面监听vuex中菜单数据</h5><p><img src="/images/vuex2.png" alt="&quot;代码&quot;"><br>页面刷新的解决方案：</p>
+<p>页面刷新的时候异步请求后台数据，然后动态更新vuex中的数据，其中会有一种情况就是，网络延迟、数据量大的问题。此时还没等vuex获取到后台返回的数据，页面就已经加载完成了，这样就会造成数据丢失。所以该解决方案就是，监听浏览器刷新前事件，在浏览器刷新之前就把vuex里的数据保存至sessionStorage中，刷新成功后如果异步请求的数据还没返回则直接获取sessionStorage里的数据，否则获取vuex里的数据。（只有刷新后还没取到后台数据，才会从sessionStorage里取。确保数据的安全性，就算获取sessionStorage里的数据也是安全的，因为每次刷新都会重新赋值，不必担心数据被篡改问题，其次就是对sessionStorage里的数据做了加密操作）</p>
+<h5 id="在父页面向后台请求数据，并且监听浏览器刷新前事件，将vuex数据保存至sessionStorage"><a href="#在父页面向后台请求数据，并且监听浏览器刷新前事件，将vuex数据保存至sessionStorage" class="headerlink" title="在父页面向后台请求数据，并且监听浏览器刷新前事件，将vuex数据保存至sessionStorage"></a>在父页面向后台请求数据，并且监听浏览器刷新前事件，将vuex数据保存至sessionStorage</h5><p><img src="/images/vuex3.png" alt="&quot;代码&quot;">  </p>
+<h5 id="在父页面向后台请求数据，将返回的数据分发至vuex"><a href="#在父页面向后台请求数据，将返回的数据分发至vuex" class="headerlink" title="在父页面向后台请求数据，将返回的数据分发至vuex"></a>在父页面向后台请求数据，将返回的数据分发至vuex</h5><p><img src="/images/vuex4.png" alt="&quot;代码&quot;">  </p>
+<h5 id="我还看到另外一个文章是用async来实现的，也很不错，大家可以看看"><a href="#我还看到另外一个文章是用async来实现的，也很不错，大家可以看看" class="headerlink" title="我还看到另外一个文章是用async来实现的，也很不错，大家可以看看"></a>我还看到另外一个文章是用async来实现的，也很不错，大家可以看看</h5><p>详细方式可以看：<a target="_blank" rel="noopener" href="https://blog.csdn.net/success400/article/details/109642431">https://blog.csdn.net/success400/article/details/109642431</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/03/14/vueX%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" data-id="ckm92kacr0007047828qt8g63" data-title="vueX页面刷新、数据丢失问题" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/22/%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9F%AD%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">史上最短数组去重</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hello-%E9%83%AD%E8%94%B7%E8%96%87/" rel="tag">Hello 郭蔷薇</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/get-post%E5%8C%BA%E5%88%AB/" rel="tag">get post区别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BD%BF%E7%94%A8indexOf-%E5%8F%96%E4%B8%A4%E6%95%B0%E7%BB%84%E6%95%B0%E7%BB%84%E4%BA%A4%E9%9B%86/" rel="tag">使用indexOf 取两数组数组交集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9F%AD%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" rel="tag">史上最短数组去重</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" rel="tag">数组去重</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/" rel="tag">数组去重的四种方法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95-sort%E6%8E%92%E5%BA%8F-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F/" rel="tag">数组排序的几种方法(sort排序 冒泡排序 旋转排序)</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Hello-%E9%83%AD%E8%94%B7%E8%96%87/" style="font-size: 10px;">Hello 郭蔷薇</a> <a href="/tags/get-post%E5%8C%BA%E5%88%AB/" style="font-size: 10px;">get post区别</a> <a href="/tags/%E4%BD%BF%E7%94%A8indexOf-%E5%8F%96%E4%B8%A4%E6%95%B0%E7%BB%84%E6%95%B0%E7%BB%84%E4%BA%A4%E9%9B%86/" style="font-size: 10px;">使用indexOf 取两数组数组交集</a> <a href="/tags/%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9F%AD%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" style="font-size: 10px;">史上最短数组去重</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" style="font-size: 10px;">数组去重</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/" style="font-size: 10px;">数组去重的四种方法</a> <a href="/tags/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95-sort%E6%8E%92%E5%BA%8F-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">数组排序的几种方法(sort排序 冒泡排序 旋转排序)</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/03/14/vueX%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/">vueX页面刷新、数据丢失问题</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9F%AD%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/">史上最短数组去重</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/13/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/">数组去重的四种方法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">数组排序的几种方法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/get-post%E5%8C%BA%E5%88%AB/">get post区别</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
