@@ -63,12 +63,12 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Buscar"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
       </div>
     </div>
   </div>
@@ -76,6 +76,60 @@
 
       <div class="outer">
         <section id="main">
+  
+    <article id="post-vue前端视频接入LivePlayer-H5直播-点播播放器" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/04/13/vue%E5%89%8D%E7%AB%AF%E8%A7%86%E9%A2%91%E6%8E%A5%E5%85%A5LivePlayer-H5%E7%9B%B4%E6%92%AD-%E7%82%B9%E6%92%AD%E6%92%AD%E6%94%BE%E5%99%A8/" class="article-date">
+  <time class="dt-published" datetime="2021-04-13T06:28:55.000Z" itemprop="datePublished">2021-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/04/13/vue%E5%89%8D%E7%AB%AF%E8%A7%86%E9%A2%91%E6%8E%A5%E5%85%A5LivePlayer-H5%E7%9B%B4%E6%92%AD-%E7%82%B9%E6%92%AD%E6%92%AD%E6%94%BE%E5%99%A8/">vue前端视频接入LivePlayer H5直播|点播播放器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>前段时间项目需要接入播放器，直播视频，调研了很久也试了很多方式，最后采用的是LivePlayer这种框架，还有几个播放器也是不错的，后面会再简单的记录一下的。<br>LivePlayer H5：<a target="_blank" rel="noopener" href="https://www.liveqing.com/docs/download/LivePlayer.html">https://www.liveqing.com/docs/download/LivePlayer.html</a><br>西瓜播放器：<a target="_blank" rel="noopener" href="http://h5player.bytedance.com/plugins/#xgplayer-hls">http://h5player.bytedance.com/plugins/#xgplayer-hls</a> （中文文档很不错）<br>vue-video-player</p>
+<h2 id="1、首先是安装-LivePlayer"><a href="#1、首先是安装-LivePlayer" class="headerlink" title="1、首先是安装 LivePlayer"></a>1、首先是安装 LivePlayer</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @liveqing&#x2F;liveplayer -S</span><br></pre></td></tr></table></figure>
+<h2 id="2、在index-html引入js"><a href="#2、在index-html引入js" class="headerlink" title="2、在index.html引入js"></a>2、在index.html引入js</h2><script src="liveplayer-lib.min.js"></script>
+<p>这个地方我是把liveplayer-lib.min.js下载到了本地，可以从官网里面下载<br>也可以直接引入</p>
+<script src="js/liveplayer-lib.min.js"></script> (我是直接引入不生效才选择下载到本地的)
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>*********************************<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;liveplayer-lib.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3、页面引入"><a href="#3、页面引入" class="headerlink" title="3、页面引入"></a>3、页面引入</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> LivePlayer <span class="keyword">from</span> <span class="string">&#x27;@liveqing/liveplayer&#x27;</span>;</span><br><span class="line"></span><br><span class="line">components: &#123;</span><br><span class="line">    LivePlayer</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、页面使用"><a href="#4、页面使用" class="headerlink" title="4、页面使用"></a>4、页面使用</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;live-player</span><br><span class="line">    class=&quot;live-video&quot; </span><br><span class="line">    ref=&quot;player&quot;</span><br><span class="line">    :videoUrl=&quot;videoUrl&quot; <span class="comment">&lt;!-- 视频流直播链接 --&gt;</span></span><br><span class="line">    v-loading=&quot;loading&quot;</span><br><span class="line">    muted <span class="comment">&lt;!-- 是否静音 --&gt;</span></span><br><span class="line">    fluent</span><br><span class="line">    autoplay<span class="comment">&lt;!-- 是否自动播放谷歌浏览器在非静音情况下不能自动播放这个我会在文章后面写解决办法 --&gt;</span></span><br><span class="line">    live&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">live-player</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>我看网上好多文章需要添加vue.config.js，我刚开始设置了发现作用并不大就删掉了，不影响我显示效果，这个地方供参考<br><img src="/images/h5LivePlayer.webp" alt="&quot;资料代码&quot;">  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CopyWebpackPlugin = <span class="built_in">require</span>(<span class="string">&#x27;copy-webpack-plugin&#x27;</span>);</span><br><span class="line"></span><br><span class="line">   plugins: [</span><br><span class="line">      <span class="keyword">new</span> CopyWebpackPlugin([</span><br><span class="line">        &#123; <span class="attr">from</span>: <span class="string">&#x27;node_modules/@liveqing/liveplayer/dist/component/crossdomain.xml&#x27;</span>&#125;,</span><br><span class="line">        &#123; <span class="attr">from</span>: <span class="string">&#x27;node_modules/@liveqing/liveplayer/dist/component/liveplayer.swf&#x27;</span>&#125;,</span><br><span class="line">        &#123; <span class="attr">from</span>: <span class="string">&#x27;node_modules/@liveqing/liveplayer/dist/component/liveplayer-lib.min.js&#x27;</span>, <span class="attr">to</span>: <span class="string">&#x27;js/&#x27;</span>&#125;</span><br><span class="line">      ]),</span><br><span class="line">   ]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="自动播放"><a href="#自动播放" class="headerlink" title="自动播放"></a>自动播放</h2><p>因为谷歌浏览器安全问题，视频不能自动播放，所以需要特殊处理。我同时设置了，静音，自动播放没有生效，才使用的这种比较笨的方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">&quot;------------&quot;</span>,</span><br><span class="line">    type: <span class="string">&quot;get&quot;</span>,</span><br><span class="line">    data: &#123;&#125;,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">        _this.$emit(<span class="string">&#x27;allinit&#x27;</span>);</span><br><span class="line">          <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">// &lt;-----重点，加一个定时器而已</span></span><br><span class="line">            _this.$refs.player.play(); <span class="comment">// 通过ref执行播放</span></span><br><span class="line">          &#125;, <span class="number">100</span>);</span><br><span class="line">        &#125;)</span><br><span class="line">     &#125;,</span><br><span class="line">     error: <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">         _this.$emit(<span class="string">&#x27;allinit&#x27;</span>);</span><br><span class="line">         alert(<span class="string">&#x27;出错了&#x27;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2021/04/13/vue%E5%89%8D%E7%AB%AF%E8%A7%86%E9%A2%91%E6%8E%A5%E5%85%A5LivePlayer-H5%E7%9B%B4%E6%92%AD-%E7%82%B9%E6%92%AD%E6%92%AD%E6%94%BE%E5%99%A8/" data-id="cknfnwoh30000ipfy2d33cpdh" data-title="vue前端视频接入LivePlayer H5直播|点播播放器" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
   
     <article id="post-解决右键打开新的标签页，sessionStorage-失效" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
@@ -111,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/04/07/%E8%A7%A3%E5%86%B3%E5%8F%B3%E9%94%AE%E6%89%93%E5%BC%80%E6%96%B0%E7%9A%84%E6%A0%87%E7%AD%BE%E9%A1%B5%EF%BC%8CsessionStorage-%E5%A4%B1%E6%95%88/" data-id="ckn6x0d450000nsfybuwj7uob" data-title="解决右键打开新的标签页，sessionStorage 失效" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2021/04/07/%E8%A7%A3%E5%86%B3%E5%8F%B3%E9%94%AE%E6%89%93%E5%BC%80%E6%96%B0%E7%9A%84%E6%A0%87%E7%AD%BE%E9%A1%B5%EF%BC%8CsessionStorage-%E5%A4%B1%E6%95%88/" data-id="ckn6x0d450000nsfybuwj7uob" data-title="解决右键打开新的标签页，sessionStorage 失效" class="article-share-link">Teilen</a>
       
       
       
@@ -167,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/03/14/vueX%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" data-id="ckm92kacr0007047828qt8g63" data-title="vueX页面刷新、数据丢失问题" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2021/03/14/vueX%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" data-id="ckm92kacr0007047828qt8g63" data-title="vueX页面刷新、数据丢失问题" class="article-share-link">Teilen</a>
       
       
       
@@ -210,12 +264,12 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var arr = [1,2,3,1,2,3]</span><br><span class="line"></span><br><span class="line">var <span class="built_in">set</span> = new Set(arr) // 数组专集合</span><br><span class="line"></span><br><span class="line">console.log(Array.from (<span class="built_in">set</span>)) // 集合转数组</span><br></pre></td></tr></table></figure>
 
 <h2 id="ES6-Set"><a href="#ES6-Set" class="headerlink" title="ES6 Set"></a>ES6 Set</h2><p>. Set本身是一个构造函数，用来生成Set数据结构<br>. Set可以接受一个数组（或者类数组对象）作为参数，用来初始化<br>. 向Set加入值时，不会发生类型转换（类似于精确相等===），但是要注意在Set里NaN是等于自身的。另外两个对象总是不相等的。</p>
-<h2 id="ES6-Array-from"><a href="#ES6-Array-from" class="headerlink" title="ES6 Array.from"></a>ES6 Array.from</h2><p>这个方法主要是用来将一个类数组的对象，或者一个可遍历的对象转换成一个真正的数组。所谓类数组的对象指的是含有length属性的对象，像函数的arguments，DOM的节点</p>
+<h2 id="ES6-Array-from"><a href="#ES6-Array-from" class="headerlink" title="ES6 Array.from"></a>ES6 Array.from</h2><p>这个方法主要是用来将一个类数组的对象，或者一个可遍历的对象转换成一个真正的数组。所谓类数组的对象指的是含有length属性的对象，像函数的arguments，DOM的节点 </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9F%AD%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-id="ckm92kacs000804789lz71n3j" data-title="史上最短数组去重" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/22/%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9F%AD%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-id="ckm92kacs000804789lz71n3j" data-title="史上最短数组去重" class="article-share-link">Teilen</a>
       
       
       
@@ -266,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/" data-id="ckm92kact00090478f85pdt8h" data-title="数组去重的四种方法" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/13/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/" data-id="ckm92kact00090478f85pdt8h" data-title="数组去重的四种方法" class="article-share-link">Teilen</a>
       
       
       
@@ -310,7 +364,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" data-id="ckm92kacu000d04783tw44vzv" data-title="数组排序的几种方法" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/12/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" data-id="ckm92kacu000d04783tw44vzv" data-title="数组排序的几种方法" class="article-share-link">Teilen</a>
       
       
       
@@ -352,7 +406,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/get-post%E5%8C%BA%E5%88%AB/" data-id="ckm92kacm000104784taxbe1y" data-title="get post区别" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/12/get-post%E5%8C%BA%E5%88%AB/" data-id="ckm92kacm000104784taxbe1y" data-title="get post区别" class="article-share-link">Teilen</a>
       
       
       
@@ -396,7 +450,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-id="ckm92kacu000c04780ayd565r" data-title="数组去重" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/10/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" data-id="ckm92kacu000c04780ayd565r" data-title="数组去重" class="article-share-link">Teilen</a>
       
       
       
@@ -436,7 +490,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/indexOf/" data-id="ckm92kacr000504780ve047x0" data-title="indexOf 取两数组数组交集" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/10/indexOf/" data-id="ckm92kacr000504780ve047x0" data-title="indexOf 取两数组数组交集" class="article-share-link">Teilen</a>
       
       
       
@@ -487,7 +541,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/React/" data-id="ckm92kaci00000478gw8xgj9y" data-title="Hello React" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/10/React/" data-id="ckm92kaci00000478gw8xgj9y" data-title="Hello React" class="article-share-link">Teilen</a>
       
       
       
@@ -499,51 +553,12 @@
 
 
   
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2017/11/21/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2017-11-21T05:53:57.000Z" itemprop="datePublished">2017-11-21</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2017/11/21/hello-world/">Hello 郭蔷薇</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>很早的时候，就像拥有自己的博客，断断续续搞了两天总算是搞好了，磕磕绊绊遇到不少的坑，以后会发一些自己的生活日常，还有一些H5 js jq的分享，框架的话也会涉及一些 </p>
-<h1 id="郭蔷薇个人博客"><a href="#郭蔷薇个人博客" class="headerlink" title="郭蔷薇个人博客"></a>郭蔷薇个人博客</h1><h2 id="郭蔷薇个人博客-1"><a href="#郭蔷薇个人博客-1" class="headerlink" title="郭蔷薇个人博客"></a>郭蔷薇个人博客</h2><h3 id="郭蔷薇个人博客-2"><a href="#郭蔷薇个人博客-2" class="headerlink" title="郭蔷薇个人博客"></a>郭蔷薇个人博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello 多多指教 <span class="string">&quot;我是郭蔷薇&quot;</span></span><br></pre></td></tr></table></figure>
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/21/hello-world/" data-id="ckm92kacq000404782xhtf2iv" data-title="Hello 郭蔷薇" class="article-share-link">Compartir</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hello-%E9%83%AD%E8%94%B7%E8%96%87/" rel="tag">Hello 郭蔷薇</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+  </nav>
 
 </section>
         
@@ -564,7 +579,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Hello-%E9%83%AD%E8%94%B7%E8%96%87/" style="font-size: 10px;">Hello 郭蔷薇</a> <a href="/tags/get-post%E5%8C%BA%E5%88%AB/" style="font-size: 10px;">get post区别</a> <a href="/tags/vueX%E9%A1%B5%E9%9D%A2%E5%88%B7%E6%96%B0%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/" style="font-size: 10px;">vueX页面刷新、数据丢失问题</a> <a href="/tags/%E4%BD%BF%E7%94%A8indexOf-%E5%8F%96%E4%B8%A4%E6%95%B0%E7%BB%84%E6%95%B0%E7%BB%84%E4%BA%A4%E9%9B%86/" style="font-size: 10px;">使用indexOf 取两数组数组交集</a> <a href="/tags/%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9F%AD%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" style="font-size: 10px;">史上最短数组去重</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" style="font-size: 10px;">数组去重</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/" style="font-size: 10px;">数组去重的四种方法</a> <a href="/tags/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95-sort%E6%8E%92%E5%BA%8F-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-%E6%97%8B%E8%BD%AC%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">数组排序的几种方法(sort排序 冒泡排序 旋转排序)</a> <a href="/tags/%E8%A7%A3%E5%86%B3%E5%8F%B3%E9%94%AE%E6%89%93%E5%BC%80%E6%96%B0%E7%9A%84%E6%A0%87%E7%AD%BE%E9%A1%B5%EF%BC%8CsessionStorage-%E5%A4%B1%E6%95%88/" style="font-size: 10px;">解决右键打开新的标签页，sessionStorage 失效</a>
     </div>
@@ -573,7 +588,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
     </div>
@@ -583,9 +598,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/04/13/vue%E5%89%8D%E7%AB%AF%E8%A7%86%E9%A2%91%E6%8E%A5%E5%85%A5LivePlayer-H5%E7%9B%B4%E6%92%AD-%E7%82%B9%E6%92%AD%E6%92%AD%E6%94%BE%E5%99%A8/">vue前端视频接入LivePlayer H5直播|点播播放器</a>
+          </li>
         
           <li>
             <a href="/2021/04/07/%E8%A7%A3%E5%86%B3%E5%8F%B3%E9%94%AE%E6%89%93%E5%BC%80%E6%96%B0%E7%9A%84%E6%A0%87%E7%AD%BE%E9%A1%B5%EF%BC%8CsessionStorage-%E5%A4%B1%E6%95%88/">解决右键打开新的标签页，sessionStorage 失效</a>
@@ -603,10 +622,6 @@
             <a href="/2018/03/13/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/">数组去重的四种方法</a>
           </li>
         
-          <li>
-            <a href="/2018/03/12/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">数组排序的几种方法</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -621,7 +636,7 @@
     <div id="footer-info" class="inner">
       
       &copy; 2021 我是光脚来的<br>
-      Construido por <a href="https://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
